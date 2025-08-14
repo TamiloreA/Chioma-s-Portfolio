@@ -141,7 +141,7 @@ export default function Contact() {
   const socialLinks = [
     {
       name: "LinkedIn",
-      url: "https://linkedin.com/in/egwuatuchioma",
+      url: "https://www.linkedin.com/in/egwuatu-chiomaa?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3By4dhiNmrQHSB0pAJvNZx6g%3D%3D",
       icon: <Linkedin size={20} />,
     },
     {
