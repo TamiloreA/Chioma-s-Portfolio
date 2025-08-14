@@ -121,14 +121,14 @@ export default function Contact() {
     {
       icon: <Mail size={20} />,
       label: "Email",
-      value: "hello@egwuatuchioma.com",
-      link: "mailto:hello@egwuatuchioma.com",
+      value: "egwuatuchioma648@gmail.com",
+      link: "mailto:egwuatuchioma648@gmail.com",
     },
     {
       icon: <Phone size={20} />,
       label: "Phone",
-      value: "+234 (0) 123 456 789",
-      link: "tel:+2341234567890",
+      value: "+234 (0) 701 150 3815",
+      link: "tel:+23407011503815",
     },
     {
       icon: <MapPin size={20} />,

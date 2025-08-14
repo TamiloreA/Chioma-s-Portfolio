@@ -83,7 +83,7 @@ export default function Hero() {
           <div className="profile-container">
             <div className="profile-ring"></div>
             <div className="profile-image">
-              <img src="/IMG_3425.HEIC" alt="Egwuatu Chioma - Creative Designer" />
+              <img src="/WhatsApp Image 2025-08-14 at 16.43.49.jpeg" alt="Egwuatu Chioma - Creative Designer" />
             </div>
             <div className="floating-icons">
               <div className="icon icon-1">
