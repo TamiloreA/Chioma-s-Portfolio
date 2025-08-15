@@ -27,7 +27,7 @@ export default function About() {
           setIsVisible(true)
         }
       },
-      { threshold: 0.3 },
+      { threshold: 0.1 },
     )
 
     if (sectionRef.current) {
@@ -36,6 +36,10 @@ export default function About() {
 
     return () => observer.disconnect()
   }, [])
+
+  const handleTimelineInteraction = (index) => {
+    setActiveTimeline(index)
+  }
 
   const timelineData = [
     {
@@ -98,7 +102,14 @@ export default function About() {
             </div>
 
             <div className="personality-traits">
-              <div className="trait">
+              <div
+                className="trait"
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? "translateY(0)" : "translateY(20px)",
+                  animation: isVisible ? "slideInUp 0.6s ease forwards" : "none",
+                }}
+              >
                 <div className="trait-icon">
                   <Palette size={24} />
                 </div>
@@ -107,7 +118,15 @@ export default function About() {
                   <p>I approach every project with fresh eyes and innovative solutions</p>
                 </div>
               </div>
-              <div className="trait">
+              <div
+                className="trait"
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? "translateY(0)" : "translateY(20px)",
+                  animation: isVisible ? "slideInUp 0.6s ease forwards" : "none",
+                  animationDelay: isVisible ? "0.5s" : "none",
+                }}
+              >
                 <div className="trait-icon">
                   <Lightbulb size={24} />
                 </div>
@@ -116,7 +135,15 @@ export default function About() {
                   <p>I love turning complex challenges into elegant, simple solutions</p>
                 </div>
               </div>
-              <div className="trait">
+              <div
+                className="trait"
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? "translateY(0)" : "translateY(20px)",
+                  animation: isVisible ? "slideInUp 0.6s ease forwards" : "none",
+                  animationDelay: isVisible ? "0.7s" : "none",
+                }}
+              >
                 <div className="trait-icon">
                   <Users size={24} />
                 </div>
@@ -160,6 +187,9 @@ export default function About() {
                 key={index}
                 className={`timeline-item ${activeTimeline >= index ? "active" : ""}`}
                 onMouseEnter={() => setActiveTimeline(index)}
+                onTouchStart={() => handleTimelineInteraction(index)}
+                onClick={() => handleTimelineInteraction(index)}
+                style={{ "--item-index": index }}
               >
                 <div className="timeline-marker">
                   <div className="timeline-icon">{item.icon}</div>
@@ -214,6 +244,7 @@ export default function About() {
         .about-text.animate {
           opacity: 1;
           transform: translateX(0);
+          animation: slideInLeft 1s ease forwards;
           animation-delay: 0.3s;
         }
 
@@ -246,6 +277,8 @@ export default function About() {
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
           transition: all 0.3s ease;
           border: 1px solid var(--border);
+          opacity: 0;
+          transform: translateY(20px);
         }
 
         .trait:hover {
@@ -285,6 +318,7 @@ export default function About() {
         .about-visual.animate {
           opacity: 1;
           transform: translateX(0);
+          animation: slideInRight 1s ease forwards;
           animation-delay: 0.5s;
         }
 
@@ -355,6 +389,7 @@ export default function About() {
         .stats-section.animate {
           opacity: 1;
           transform: translateY(0);
+          animation: slideInUp 1s ease forwards;
           animation-delay: 0.7s;
         }
 
@@ -412,6 +447,7 @@ export default function About() {
         .timeline-section.animate {
           opacity: 1;
           transform: translateY(0);
+          animation: slideInUp 1s ease forwards;
           animation-delay: 0.9s;
         }
 
@@ -542,15 +578,63 @@ export default function About() {
           }
         }
 
-        /* Responsive Design */
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         @media (max-width: 768px) {
           .about-content {
             grid-template-columns: 1fr;
             gap: 2rem;
           }
 
-          .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
+          .about-text.animate {
+            animation: slideInUp 0.8s ease forwards;
+            animation-delay: 0.2s;
+          }
+
+          .about-visual.animate {
+            animation: slideInUp 0.8s ease forwards;
+            animation-delay: 0.4s;
+          }
+
+          .stats-section.animate {
+            animation: slideInUp 0.8s ease forwards;
+            animation-delay: 0.6s;
+          }
+
+          .timeline-section.animate {
+            animation: slideInUp 0.8s ease forwards;
+            animation-delay: 0.8s;
           }
 
           .timeline::before {
@@ -564,24 +648,37 @@ export default function About() {
           .timeline-item:nth-child(odd) .timeline-content,
           .timeline-item:nth-child(even) .timeline-content {
             left: 80px;
-            right: 0;
+            right: 20px;
             text-align: left;
           }
-        }
 
-        @media (max-width: 480px) {
-          .stats-grid {
-            grid-template-columns: 1fr;
+          .timeline-section.animate .timeline-item {
+            animation: slideInUp 0.6s ease forwards;
+            animation-delay: calc(1s + var(--item-index) * 0.15s);
           }
 
           .trait {
             flex-direction: column;
             text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 2rem 1.5rem;
           }
 
           .trait-icon {
+            width: 60px;
+            height: 60px;
             margin-right: 0;
             margin-bottom: 1rem;
+          }
+
+          .trait-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+          }
+
+          .trait-content p {
+            font-size: 0.95rem;
+            line-height: 1.6;
           }
         }
       `}</style>

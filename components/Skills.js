@@ -49,7 +49,7 @@ export default function Skills() {
           setIsVisible(true)
         }
       },
-      { threshold: 0.3 },
+      { threshold: 0.1 },
     )
 
     if (sectionRef.current) {
@@ -143,6 +143,22 @@ export default function Skills() {
     },
   ]
 
+  const handleSkillCardTouch = (e) => {
+    const card = e.currentTarget
+    card.style.transform = "translateY(-5px)"
+    setTimeout(() => {
+      card.style.transform = "translateY(0)"
+    }, 200)
+  }
+
+  const handleSoftSkillTouch = (e) => {
+    const card = e.currentTarget
+    card.style.transform = "translateY(-10px)"
+    setTimeout(() => {
+      card.style.transform = "translateY(0)"
+    }, 200)
+  }
+
   return (
     <section id="skills" className="section skills-section" ref={sectionRef}>
       <div className="container">
@@ -171,7 +187,12 @@ export default function Skills() {
         <div className={`skills-content ${isVisible ? "animate" : ""}`}>
           <div className="skills-grid">
             {skillCategories[activeCategory].skills.map((skill, index) => (
-              <div key={skill.name} className="skill-card" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div
+                key={skill.name}
+                className="skill-card"
+                style={{ animationDelay: `${index * 0.1}s` }}
+                onTouchStart={handleSkillCardTouch}
+              >
                 <div className="skill-header">
                   <div className="skill-icon">{skill.icon}</div>
                   <div className="skill-info">
@@ -191,7 +212,12 @@ export default function Skills() {
           <h3>Soft Skills</h3>
           <div className="soft-skills-grid">
             {softSkills.map((skill, index) => (
-              <div key={skill.name} className="soft-skill-card" style={{ animationDelay: `${index * 0.15}s` }}>
+              <div
+                key={skill.name}
+                className="soft-skill-card"
+                style={{ animationDelay: `${index * 0.15}s` }}
+                onTouchStart={handleSoftSkillTouch}
+              >
                 <div className="soft-skill-icon">{skill.icon}</div>
                 <h4>{skill.name}</h4>
                 <p>{skill.description}</p>
@@ -230,8 +256,41 @@ export default function Skills() {
           pointer-events: none;
         }
 
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
         .section-title.animate {
-          animation: fadeInUp 1s ease forwards;
+          animation: slideInUp 1s ease forwards;
         }
 
         .skills-intro {
@@ -244,8 +303,7 @@ export default function Skills() {
         }
 
         .skills-intro.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 0.2s;
         }
 
@@ -267,8 +325,7 @@ export default function Skills() {
         }
 
         .category-tabs.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 0.4s;
         }
 
@@ -312,8 +369,7 @@ export default function Skills() {
         }
 
         .skills-content.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 0.6s;
         }
 
@@ -332,7 +388,7 @@ export default function Skills() {
           transition: all 0.3s ease;
           opacity: 0;
           transform: translateY(30px);
-          animation: fadeInUp 0.8s ease forwards;
+          animation: slideInUp 0.8s ease forwards;
         }
 
         .skill-card:hover {
@@ -412,8 +468,7 @@ export default function Skills() {
         }
 
         .soft-skills-section.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 0.8s;
         }
 
@@ -443,7 +498,7 @@ export default function Skills() {
           transition: all 0.3s ease;
           opacity: 0;
           transform: translateY(30px);
-          animation: fadeInUp 0.8s ease forwards;
+          animation: slideInUp 0.8s ease forwards;
         }
 
         .soft-skill-card:hover {
@@ -482,8 +537,7 @@ export default function Skills() {
         }
 
         .skills-cta.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 1s;
         }
 
@@ -536,6 +590,34 @@ export default function Skills() {
 
           .cta-content h3 {
             font-size: 2rem;
+          }
+
+          .skills-intro.animate {
+            animation-delay: 0.1s;
+          }
+
+          .category-tabs.animate {
+            animation-delay: 0.2s;
+          }
+
+          .skills-content.animate {
+            animation-delay: 0.3s;
+          }
+
+          .soft-skills-section.animate {
+            animation-delay: 0.4s;
+          }
+
+          .skills-cta.animate {
+            animation-delay: 0.5s;
+          }
+
+          .skill-card {
+            animation-duration: 0.6s;
+          }
+
+          .soft-skill-card {
+            animation-duration: 0.6s;
           }
         }
 

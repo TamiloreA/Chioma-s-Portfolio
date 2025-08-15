@@ -16,7 +16,7 @@ export default function Projects() {
           setIsVisible(true)
         }
       },
-      { threshold: 0.3 },
+      { threshold: 0.1 },
     )
 
     if (sectionRef.current) {
@@ -133,6 +133,14 @@ export default function Projects() {
     document.body.style.overflow = "unset"
   }
 
+  const handleProjectTouch = (project) => {
+    openModal(project)
+  }
+
+  const handleFilterTouch = (filterKey) => {
+    setActiveFilter(filterKey)
+  }
+
   return (
     <section id="projects" className="section projects-section" ref={sectionRef}>
       <div className="container">
@@ -151,6 +159,7 @@ export default function Projects() {
               key={category.key}
               className={`filter-button ${activeFilter === category.key ? "active" : ""}`}
               onClick={() => setActiveFilter(category.key)}
+              onTouchStart={() => handleFilterTouch(category.key)}
             >
               <span className="filter-icon">{category.icon}</span>
               <span className="filter-text">{category.label}</span>
@@ -165,6 +174,7 @@ export default function Projects() {
               className={`project-card ${project.featured ? "featured" : ""}`}
               style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => openModal(project)}
+              onTouchStart={() => handleProjectTouch(project)}
             >
               <div className="project-image">
                 <img src={project.image || "/placeholder.svg"} alt={project.title} />
@@ -297,7 +307,7 @@ export default function Projects() {
         }
 
         .section-title.animate {
-          animation: fadeInUp 1s ease forwards;
+          animation: slideInUp 1s ease forwards;
         }
 
         .projects-intro {
@@ -310,8 +320,7 @@ export default function Projects() {
         }
 
         .projects-intro.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 0.2s;
         }
 
@@ -333,8 +342,7 @@ export default function Projects() {
         }
 
         .filter-tabs.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 0.4s;
         }
 
@@ -379,8 +387,7 @@ export default function Projects() {
         }
 
         .projects-grid.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 0.6s;
         }
 
@@ -395,7 +402,7 @@ export default function Projects() {
           position: relative;
           opacity: 0;
           transform: translateY(30px);
-          animation: fadeInUp 0.8s ease forwards;
+          animation: slideInUp 0.8s ease forwards;
         }
 
         .project-card:hover {
@@ -539,8 +546,7 @@ export default function Projects() {
         }
 
         .projects-cta.animate {
-          opacity: 1;
-          transform: translateY(0);
+          animation: slideInUp 0.8s ease forwards;
           animation-delay: 0.8s;
         }
 
@@ -687,6 +693,28 @@ export default function Projects() {
           }
         }
 
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
           .filter-tabs {
@@ -728,6 +756,17 @@ export default function Projects() {
           .modal-actions {
             flex-direction: column;
           }
+
+          .project-card {
+            animation-duration: 0.6s;
+          }
+
+          .projects-intro.animate,
+          .filter-tabs.animate,
+          .projects-grid.animate,
+          .projects-cta.animate {
+            animation-duration: 0.6s;
+          }
         }
 
         @media (max-width: 480px) {
@@ -742,6 +781,10 @@ export default function Projects() {
 
           .modal-overlay {
             padding: 1rem;
+          }
+
+          .project-card {
+            animation-duration: 0.5s;
           }
         }
       `}</style>
